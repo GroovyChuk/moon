@@ -48,5 +48,4 @@ public class CelestialBody{
     return (float)r;
   }
   
- 
 }
