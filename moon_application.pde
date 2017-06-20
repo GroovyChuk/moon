@@ -18,13 +18,19 @@ void setup() {
     moon = new Moon(250 * Math.cos(radians(90)),250 * Math.sin(radians(90)));
     moon2 = new Moon(250 * Math.cos(radians(85)),250 * Math.sin(radians(85)));
     
-    
+    // configure moons by adding references of eachother and setting earth as target
+    moon.setOtherMoon(moon2);
+    moon2.setOtherMoon(moon);
+    moon.setTarget(earth);
+    moon2.setTarget(earth);
     
     //Einmaliges Berechnen der Ruhelaenge
     rx = moon2.getPx() - moon.getPx(); 
     ry = moon2.getPy() - moon.getPy();
     ruhelaenge = Math.sqrt(Math.pow(rx,2) + Math.pow(ry,2));
     
+    moon.setRuhelaenge(ruhelaenge);
+    moon2.setRuhelaenge(ruhelaenge);
 }
 
 void draw() {
@@ -38,8 +44,8 @@ void draw() {
     fill(255);*/
     
     if(!forceFreeze)
-      moon.step(earth, moon2, ruhelaenge);
-      moon2.step(earth, moon, ruhelaenge);
+      moon.step();
+      moon2.step();
     text("Vx: " + moon.vx,  50, 50);
     text("Vy: " + moon.vy, 50, 80);
     text("r: " + moon.getR(), 50, 110);

@@ -1,6 +1,8 @@
 public class Moon extends CelestialBody {
   
   double ax, ay, ex, ey, ruhelaenge, rx, ry,rlaenge, k = 10;
+  Moon otherMoon;
+  Earth earth;
 
   Moon(double px, double py) {
     this.px = px;
@@ -14,27 +16,15 @@ public class Moon extends CelestialBody {
   }
   
 
-  void step(Earth earth, Moon otherMoon, double ruhelaenge) {
+  void step() {
      
     rx = otherMoon.getPx() - px; 
     ry = otherMoon.getPy() - py;
     rlaenge = Math.sqrt(Math.pow(rx,2) + Math.pow(ry,2));
     
     
-   
     ex = rx/rlaenge;
     ey = ry/rlaenge;
-    
-    
-    /*vx = vx + (step * axFeder);
-    vy = vy + (step * ayFeder);
-
-    py = py + (step * vy);
-    px = px + (step * vx);*/
-    
-    
-    
-    
     
     
     // Simulieren der Umlaufbahn
@@ -62,6 +52,17 @@ public class Moon extends CelestialBody {
   
   }
   
+    void setRuhelaenge(double ruhelaenge){
+    this.ruhelaenge = ruhelaenge;
+  }
+  
+  void setOtherMoon(Moon otherMoon){
+    this.otherMoon = otherMoon;
+  }  
+  
+    void setTarget(Earth target){
+    earth = target;
+  }  
 
  
 }
