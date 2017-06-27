@@ -4,7 +4,7 @@ boolean forceFreeze = false;     // toggle game physics
 Moon moon;
 Moon moon2;
 Earth earth;
-double step = 1, rx, ry, ruhelaenge;
+double step = 0.1, rx, ry, ruhelaenge;
 PVector a = new PVector(350,0);
 PVector b = new PVector();
 float angle;
@@ -44,8 +44,12 @@ void draw() {
     fill(255);*/
     
     if(!forceFreeze)
-      moon.step();
-      moon2.step();
+      moon.berechneKraefte();
+      moon2.berechneKraefte();
+      
+      moon.fuehreKraefteAus();
+      moon2.fuehreKraefteAus();
+      
     text("Vx: " + moon.vx,  50, 50);
     text("Vy: " + moon.vy, 50, 80);
     text("r: " + moon.getR(), 50, 110);
