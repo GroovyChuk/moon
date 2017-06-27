@@ -32,15 +32,15 @@ public class Moon extends CelestialBody {
     // Mittelpunkt der beiden Massepunkte auf die Umlaufbahn setzen
     x = px-(px-otherMoon.getPx())/2; 
     y = py-(py-otherMoon.getPy())/2;
-    r = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+    r = Math.sqrt(Math.pow(px, 2) + Math.pow(py, 2));
     
     //Startimpuls geben
     if(vx == 0)
       vx = -Math.sqrt(earth.getMass()/r);
     
     //Anziehungskraft + Federkraft + Zentrifugalkraft in Beschleunigung umwandeln
-    ax = -((earth.getMass() + ex*k*(rlaenge-ruhelaenge) - ex*2*ex*vx)/Math.pow(r, 3)*x);
-    ay = -((earth.getMass() + ey*k*(rlaenge-ruhelaenge) - ey*2*ey*vy)/Math.pow(r, 3)*y);
+    ax = -((earth.getMass())/Math.pow(r, 3)*px) + (ex*k*(rlaenge-ruhelaenge) - ex*2*ex*vx)/mass;
+    ay = -((earth.getMass())/Math.pow(r, 3)*py) + (ey*k*(rlaenge-ruhelaenge) - ey*2*ey*vy)/mass;
     
     //Beschleunigung in Geschwindigkeit umwandeln
     vx = vx + (step * ax);
