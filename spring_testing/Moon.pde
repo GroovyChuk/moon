@@ -58,8 +58,8 @@ public class Moon extends CelestialBody {
     vix = (py - schwerpunkt_y)*0.1 ; 
     viy = -(px - schwerpunkt_x)*0.1;    
     //Geschwindigkeit in Positionsveränderung umwandeln
-    px = px + (step * (vx + 0*vix)); 
-    py = py + (step * (vy + 0*viy));
+    px = px + (step * (vx + vix)); 
+    py = py + (step * (vy + viy));
   }
   
   double getOrtsvektor(){

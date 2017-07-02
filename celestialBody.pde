@@ -35,7 +35,7 @@ public class CelestialBody{
     return (float)y;
   }
   
-  void setPos(int x,int y){
+  void setPos(float x,float y){
     px = x;
     py = y;
   }

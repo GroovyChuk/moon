@@ -1,10 +1,10 @@
 color c_earth = color(0,0,255);
 color c_moon = color(255,255,153);
-boolean forceFreeze = false;     // toggle game physics 
+boolean forceFreeze = false, rotation = true;    // toggle game physics 
 Moon moon;
 Moon moon2;
 Earth earth;
-double step = 0.1, rx, ry, ruhelaenge;
+double step = 0.5, rx, ry, ruhelaenge;
 PVector a = new PVector(350,0);
 PVector b = new PVector();
 float angle;
@@ -36,29 +36,42 @@ void setup() {
 void draw() {
     background(0,0,0);
     translate(width/2, height/2);
-    
-    
+   
     stroke(255);
-    /*line(0,0,moon.getPx(),moon.getPy());
-    line(0,0,moon2.getPx(),moon2.getPy());
-    fill(255);*/
+    fill(255);
     
-    if(!forceFreeze)
+    if(!forceFreeze){
       moon.berechneKraefte();
       moon2.berechneKraefte();
       
       moon.fuehreKraefteAus();
       moon2.fuehreKraefteAus();
-      
-    text("Vx: " + moon.vx,  50, 50);
-    text("Vy: " + moon.vy, 50, 80);
-    text("r: " + moon.getR(), 50, 110);
+    }   
+      if(mousePressed){
+        if (!moon2.mouseDown)
+          moon.mouse();
+        if (!moon.mouseDown)
+          moon2.mouse();
+      } else {
+        moon.mouseDown = false;
+        moon2.mouseDown = false;
+      }
+    text("Moon 1: ", -570, -570);
+    text("Velocity X: " + String.format("%.2f",moon.getVx()), -500, -570);
+    text("Velocity Y: " + String.format("%.2f",moon.getVy()), -500, -540);
+    text("Ortsvektor: " + String.format("%.2f",moon.getOrtsvektor()), -500, -510);
+    text("Moon 2: ", -570, -470);
+    text("Velocity X: " + String.format("%.2f",moon2.getVx()), -500, -470);
+    text("Velocity Y: " + String.format("%.2f",moon2.getVy()), -500, -440);
+    text("Ortsvektor: " + String.format("%.2f",moon2.getOrtsvektor()), -500, -410);
+    fill(255);
+
     earth.draw();
     moon.draw();
     moon2.draw();
    
-   }
-    
+   
+}
     
 void keyPressed(){
   switch(key)
@@ -69,5 +82,18 @@ void keyPressed(){
   case ' ':
     forceFreeze = !forceFreeze;
     break;
+  case 'r':
+    if(rotation) {
+      moon.setVRot(0);
+      moon2.setVRot(0);
+      rotation = false;
+    } else {
+      moon.setVRot(0.1);
+      moon2.setVRot(0.1);
+      rotation = true;
+    }
+    
+    break;
   }
+
 }

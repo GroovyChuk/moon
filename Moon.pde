@@ -6,6 +6,8 @@ public class Moon extends CelestialBody {
   double ex, ey, vix ,viy; //Einheitsvektor
   double ruhelaenge, k = 10;// Bauteile der Federkraft
   double schwerpunkt_x, schwerpunkt_y; // Koordinaten des gemeinsamen Schwerpunkts
+  double VRot = 0.1;
+  boolean mouseDown = false;
   Moon otherMoon;
   Earth earth;
 
@@ -17,39 +19,36 @@ public class Moon extends CelestialBody {
     radius = 20;
     colour = c_moon;
     mass = 1000;
-    r = getOrtsvektor();
-    
+    r = getOrtsvektor();    
   }
   void berechneKraefte(){
     
     //Berechnen des Einheitsvektors für die Federkraft
-    erx = otherMoon.getPx() - px; 
-    ery = otherMoon.getPy() - py;
-    rlaenge = Math.sqrt(Math.pow(rx,2) + Math.pow(ry,2));
-    ex = erx/rlaenge;
-    ey = ery/rlaenge;
+    rx = otherMoon.getPx() - px;
+    ry = otherMoon.getPy() - py;
     
+    rlaenge = Math.sqrt(Math.pow(rx,2) + Math.pow(ry,2));
+    ex = rx/rlaenge;
+    ey = ry/rlaenge;
     
     // Berechnen der Beschleunigung der Federkraft
-    fx = (ex*k*(rlaenge-ruhelaenge) - ex*2*ex*vx)/mass;
-    fy = (ey*k*(rlaenge-ruhelaenge) - ey*2*ey*vy)/mass;
-    
+    //fx = (ex*k*(rlaenge-ruhelaenge) - ex*4*ex*vx)/mass;
+    //fy = (ey*k*(rlaenge-ruhelaenge) - ey*4*ey*vy)/mass;
+    fx = ex *(k*(rlaenge-ruhelaenge) - 4*(vx-otherMoon.getVx())*ex) /mass;
+    fy = ey *(k*(rlaenge-ruhelaenge) - 4*(vy-otherMoon.getVy())*ey) /mass;
     
     // Simulieren der Umlaufbahn
-    r = getOrtsvektor();
     
     //Anziehungskraft + Zentrifugalkraft in Beschleunigung umwandeln
-    gx = -((earth.getMass())/Math.pow(r, 3)*px);
-    gy = -((earth.getMass())/Math.pow(r, 3)*py);
-    
-    
+    gx = -((earth.getMass())/Math.pow(getOrtsvektor(), 3)*px);
+    gy = -((earth.getMass())/Math.pow(getOrtsvektor(), 3)*py);
     
   }
   
   
   void fuehreKraefteAus(){
-    
-     //Beschleunigung in Geschwindigkeit umwandeln
+      
+    //Beschleunigung in Geschwindigkeit umwandeln
     vx = vx + (step * (gx + fx));
     vy = vy + (step * (gy + fy));
     
@@ -57,12 +56,12 @@ public class Moon extends CelestialBody {
     schwerpunkt_x = px + otherMoon.getPx()-px;
     schwerpunkt_y = py + otherMoon.getPy()-py;
     
-    vix = (py - schwerpunkt_y)*0.1 ; 
-    viy = -(px - schwerpunkt_x)*0.1;
+    vix = (py - schwerpunkt_y)*VRot ; 
+    viy = -(px - schwerpunkt_x)*VRot; 
+
     //Geschwindigkeit in Positionsveränderung umwandeln
     px = px + (step * (vx + vix)); 
     py = py + (step * (vy + viy));
-    
   }
   
   double getOrtsvektor(){
@@ -72,7 +71,7 @@ public class Moon extends CelestialBody {
   
   void setInitialVelocity(){
       //Startimpuls geben
-      vx = -Math.sqrt(earth.getMass()/r);    
+      vx = -Math.sqrt(earth.getMass()/getOrtsvektor());    
   } 
   
   void setRuhelaenge(double ruhelaenge){
@@ -87,6 +86,31 @@ public class Moon extends CelestialBody {
     earth = target;
     setInitialVelocity();
   }  
-
- 
+  
+  float getVix() { 
+    return (float)vix;
+  }
+  
+  float getViy() { 
+    return (float)viy;
+  }
+  
+  float getVx(){
+    return (float)vx;
+  }
+  
+  float getVy(){
+    return (float)vy;
+  }
+  void mouse(){
+     if((getPx() - Radius() <= (mouseX-width/2) && getPx() + Radius() >= (mouseX-width/2)) && (getPy() - Radius() <= (mouseY-height/2) && getPy() + Radius() >= (mouseY-height/2)) || mouseDown){
+      mouseDown = true;
+      px = (mouseX-width/2);
+      py = (mouseY-height/2);
+     }
+  }
+  
+  void setVRot(double vrot){
+    this.VRot = vrot;
+  }
 }
