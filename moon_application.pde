@@ -1,6 +1,6 @@
 color c_earth = color(0,0,255);
 color c_moon = color(255,255,153);
-boolean forceFreeze = false, rotation = true;    // toggle game physics 
+boolean forceFreeze = false;   // toggle game physics 
 Moon moon;
 Moon moon2;
 Earth earth;
@@ -81,18 +81,6 @@ void keyPressed(){
     break;
   case ' ':
     forceFreeze = !forceFreeze;
-    break;
-  case 'r':
-    if(rotation) {
-      moon.setVRot(0);
-      moon2.setVRot(0);
-      rotation = false;
-    } else {
-      moon.setVRot(0.1);
-      moon2.setVRot(0.1);
-      rotation = true;
-    }
-    
     break;
   }
 
