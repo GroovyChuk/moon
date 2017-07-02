@@ -7,16 +7,10 @@ public class CelestialBody{
   double vx , vy;
   color colour;
   double r, x, y;
+  PImage photo;
   
   void draw(){
-      pushMatrix();
-      fill(colour);
-      noStroke();
-      specular(colour);
-      
-      translate(getPx(), getPy(), 0 );
-      sphere(this.Radius());
-      popMatrix();
+      image(photo,getPx()-Radius()/2, getPy()-Radius()/2,Radius(),Radius());
   }
   
  float Radius() { 

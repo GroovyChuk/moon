@@ -12,7 +12,6 @@ float angle;
 void setup() {
     
     background(0,0,0);
-    
     size(1200, 1200, P3D);
     earth = new Earth();
     moon = new Moon(250 * Math.cos(radians(90)),250 * Math.sin(radians(90)));
@@ -36,10 +35,10 @@ void setup() {
 void draw() {
     background(0,0,0);
     translate(width/2, height/2);
-   
+
     stroke(255);
     fill(255);
-    
+
     if(!forceFreeze){
       moon.berechneKraefte();
       moon2.berechneKraefte();
@@ -65,12 +64,10 @@ void draw() {
     text("Velocity Y: " + String.format("%.2f",moon2.getVy()), -500, -440);
     text("Ortsvektor: " + String.format("%.2f",moon2.getOrtsvektor()), -500, -410);
     fill(255);
-
     earth.draw();
     moon.draw();
     moon2.draw();
-   
-   
+    saveFrame("output/moon_####.png");
 }
     
 void keyPressed(){
