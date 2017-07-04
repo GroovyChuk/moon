@@ -67,7 +67,6 @@ void draw() {
     earth.draw();
     moon.draw();
     moon2.draw();
-    saveFrame("output/moon_####.png");
 }
     
 void keyPressed(){
