@@ -5,9 +5,6 @@ Moon moon;
 Moon moon2;
 Earth earth;
 double step = 0.5, rx, ry, ruhelaenge;
-PVector a = new PVector(350,0);
-PVector b = new PVector();
-float angle;
 
 void setup() {
     
